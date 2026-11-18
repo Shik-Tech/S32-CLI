@@ -7,16 +7,29 @@ Handbook: https://s32-manual.shik.tech/developers/
 
 ## Install
 
-Pick the archive for your machine (`darwin-arm64`, `darwin-x64`, `linux-x64`, or `windows-x64`). Each archive contains the `s32` binary (or `s32.exe`) and a short `INSTALL.txt`.
+One line, no download page, no `sudo` for the CLI itself.
 
-Runtime dependency: **libusb-1.0**.
+macOS and Linux:
 
-- macOS: `brew install libusb` (native Homebrew on Apple Silicon: `/opt/homebrew`)
-- Debian / Ubuntu: `sudo apt-get install libusb-1.0-0`
-- Fedora: `sudo dnf install libusb1`
-- Windows: libusb-1.0 on `PATH`
+```sh
+curl --proto '=https' --tlsv1.2 -fsSL https://github.com/Shik-Tech/S32-CLI/releases/latest/download/install.sh | sh
+```
 
-Linux: install `99-s32-editor.rules` from the tarball so `--usb` works without root (VID `0483`, PID `a56e`).
+Windows (PowerShell):
+
+```powershell
+irm https://github.com/Shik-Tech/S32-CLI/releases/latest/download/install.ps1 | iex
+```
+
+The script installs `s32` into `~/.local/bin` (macOS, Linux) or `%LOCALAPPDATA%\Programs\s32` (Windows), checks the download against `SHA256SUMS` from the same release, and tells you if the folder is not on your `PATH`. To pin a version, set `S32_VERSION=1.3.45` (Windows: `$env:S32_VERSION='1.3.45'`) or pass `sh -s -- --version 1.3.45`.
+
+Each script is also a release asset, with its SHA-256 listed in `SHA256SUMS`. Read it before you run it if you prefer.
+
+On Linux the script asks before it installs the USB rule (it runs `sudo`) and needs `libusb-1.0` from your distribution (Debian / Ubuntu: `sudo apt-get install libusb-1.0-0`; Fedora: `sudo dnf install libusb1`). macOS and Windows need nothing else.
+
+### Manual install
+
+Pick the archive for your machine (`darwin-arm64`, `darwin-x64`, `linux-x64`, or `windows-x64`) from **Releases**. Each archive contains the `s32` binary (or `s32.exe` with its DLLs) and a short `INSTALL.txt`. On Linux, install `99-s32-editor.rules` from the tarball so `--usb` works without root (VID `0483`, PID `a56e`).
 
 ```bash
 s32 --version
